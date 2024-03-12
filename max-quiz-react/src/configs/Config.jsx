@@ -52,4 +52,18 @@ const questions = [
   }
 ];
 
-export { ContactConfig, MembershipPlans, questions }
+const razorpayconfig = {
+  key: 'rzp_test_3T6byTDHuVQpX5',
+  key_secret: 'aQsOHNPDTZRxvAnruOCVupUp',
+  currency: "INR",
+  name: 'iamneo',
+}
+
+const testuserconfig = {
+  name: 'max',
+  email: 'max.neo.dev@gmail.com',
+  contact: 9876543210
+}
+
+
+export { ContactConfig, MembershipPlans, questions, razorpayconfig, testuserconfig }
