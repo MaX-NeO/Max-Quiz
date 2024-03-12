@@ -1,6 +1,8 @@
-import React, { lazy } from 'react'
+import React, { Suspense, lazy } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Loader from './components/public/Loader'
 import Home from './pages/Home'
+import Err404 from './pages/Err404'
 import WebLayout from './layouts/WebLayout'
 import UserLayout from './layouts/UserLayout'
 import McqLayout from './layouts/McqLayout'
@@ -20,24 +22,27 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route element={<WebLayout />}>
-            <Route exact path='/' element={<Home />} />
-            <Route path='/contact' element={<Contact />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-          </Route>
-          <Route element={<UserLayout />}>
-            <Route path='/user/dashboard' element={<UserDashboard />} />
-            <Route path='/user/membership' element={<UserMembership />} />
-            <Route path='/user/assesments' element={<UserAssesments />} />
-            <Route path='/user/settings' element={<UserSettings />} />
-          </Route>
-          <Route element={<McqLayout />}>
-            <Route path='/mcq/:mid' element={<McqCheck />} />
-            <Route path='/mcq/:mid/u/:uid/x/:mcqcode' element={<McqPanel />} />
-          </Route>
-        </Routes>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route element={<WebLayout />}>
+              <Route exact path='/' element={<Home />} />
+              <Route path='/contact' element={<Contact />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+            </Route>
+            <Route element={<UserLayout />}>
+              <Route path='/user/dashboard' element={<UserDashboard />} />
+              <Route path='/user/membership' element={<UserMembership />} />
+              <Route path='/user/assesments' element={<UserAssesments />} />
+              <Route path='/user/settings' element={<UserSettings />} />
+            </Route>
+            <Route element={<McqLayout />}>
+              <Route path='/mcq/:mid' element={<McqCheck />} />
+              <Route path='/mcq/:mid/u/:uid/x/:mcqcode' element={<McqPanel />} />
+            </Route>
+            <Route path='*' element={<Err404 />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </>
   )

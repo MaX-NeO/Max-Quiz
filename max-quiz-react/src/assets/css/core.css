@@ -18,3 +18,28 @@ td {
     padding: 1rem;
     text-align: center;
 }
+
+.custom-loader {
+    width: 120px;
+    height: 22px;
+    border-radius: 20px;
+    color: #f97316;
+    border: 2px solid;
+    position: relative;
+  }
+  
+  .custom-loader::before {
+    content: "";
+    position: absolute;
+    margin: 2px;
+    inset: 0 100% 0 0;
+    border-radius: inherit;
+    background: #f97316;
+    animation: p6 2s infinite;
+  }
+  
+  @keyframes p6 {
+    100% {
+      inset: 0
+    }
+  }
