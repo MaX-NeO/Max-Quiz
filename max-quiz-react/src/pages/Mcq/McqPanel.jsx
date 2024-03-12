@@ -1,52 +1,34 @@
 import React, { useState, useEffect } from 'react';
+import { Loader } from 'lucide-react'
+import { questions } from '../../configs/Config';
+import { useNavigate } from 'react-router-dom';
 
 const McqPanel = () => {
-    const questions = [
-        {
-            qid: 1,
-            title: 'question',
-            option1: 'option a',
-            option2: 'option b',
-            option3: 'option c',
-            correctoption: 'option1'
-        },
-        {
-            qid: 2,
-            title: 'question2',
-            option1: 'option m',
-            option2: 'option n',
-            option3: 'option o',
-            correctoption: 'option2'
-        },
-        {
-            qid: 3,
-            title: 'question3',
-            option1: 'option x',
-            option2: 'option y',
-            option3: 'option z',
-            correctoption: 'option3'
-        }
-    ];
-
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [timer, setTimer] = useState(10);
     const [testCompleted, setTestCompleted] = useState(false);
     const [score, setScore] = useState(0);
-    const [testmodel, setTestmodel] = useState(true)
+    const [testmodel, setTestmodel] = useState(true);
+    const [btnloader, setBtnloader] = useState(false)
+    const [issubmitted, setIssubmitted] = useState(false)
+    const navigate = useNavigate()
+    useEffect(() => {
+        let intervalId;
+        if (!testmodel) {
+            intervalId = setInterval(() => {
+                setTimer(prevTimer => prevTimer > 0 ? prevTimer - 1 : 0);
+            }, 1000);
+        }
+
+        return () => clearInterval(intervalId);
+    }, [testmodel]);
+
     useEffect(() => {
         if (timer === 0) {
             moveToNextQuestion();
         }
     }, [timer]);
-
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            setTimer(prevTimer => prevTimer > 0 ? prevTimer - 1 : 0);
-        }, 1000);
-
-        return () => clearInterval(intervalId);
-    }, [currentQuestionIndex]);
 
     const moveToNextQuestion = () => {
         if (currentQuestionIndex < questions.length - 1) {
@@ -55,11 +37,14 @@ const McqPanel = () => {
         } else {
             setTestCompleted(true);
         }
+        setBtnloader(true)
+        setTimeout(() => {
+            setBtnloader(false)
+        }, 2000)
     };
 
     const handleOptionClick = selectedOption => {
         const correctOption = currentQuestion.correctoption;
-
 
         let selectedOptionKey;
         for (const key in currentQuestion) {
@@ -76,18 +61,19 @@ const McqPanel = () => {
             timeTaken: 10 - timer
         }]);
         moveToNextQuestion();
-        console.log(selectedOptionKey, correctOption)
+
         if (selectedOptionKey === correctOption) {
-            setScore(score + 1)
+            setScore(score + 1);
         }
-        console.log(selectedOptions)
-        console.log(score)
     };
 
     const handleSubmitTest = () => {
         console.log(selectedOptions);
+        setIssubmitted(true)
     };
-
+    const routeDashboard = () => {
+        navigate('/user/dashboard')
+    }
     const currentQuestion = questions[currentQuestionIndex];
     const progressData = `${currentQuestionIndex + 1}/${questions.length}`;
 
@@ -101,13 +87,12 @@ const McqPanel = () => {
                                 <div className='h-full w-full border-2 border-orange-500/50 rounded-sm font-bold text-center text-3xl flex items-center justify-center'>
                                     Ready to Start ?
                                 </div>
-                                <button className='w-[40%] bg-gradient-to-tr from-orange-600 to-orange-300 text-white p-2 rounded-sm font-bold mt-4 shadow-md shadow-orange-500/40' onClick={() => { setTestmodel(false) }}>Start</button>
+                                <button className='w-[40%] bg-gradient-to-tr from-orange-600 to-orange-300 text-white p-2 rounded-sm font-bold mt-4 shadow-md shadow-orange-500/40' onClick={() => { setTestmodel(false) }}>Start Quiz</button>
                             </div>
                         </div>
                     </>
                 ) : (
                     <>
-
                         {!testCompleted ? (
                             <div className='w-[60vw] h-[40vh] flex flex-col rounded-sm shadow-md shadow-orange-500/20 p-4'>
                                 <div className='h-2/3 w-full border-2 border-orange-500/50 rounded-sm font-bold text-center text-3xl flex items-center justify-center'>
@@ -127,28 +112,46 @@ const McqPanel = () => {
                             </div>
                         ) : (
                             <>
-
                                 <div className='w-[60vw] h-[40vh] flex flex-col rounded-sm shadow-md shadow-orange-500/20 p-4 justify-center items-center gap-8'>
                                     <div className="text-center mt-8 text-xl font-bold">Test Completed!</div>
                                     {score}
-                                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-2/4" onClick={handleSubmitTest}>
-                                        Submit Test
-                                    </button>
+                                    {
+                                        !issubmitted ? (
+                                            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-2/4" onClick={handleSubmitTest}>
+                                                Submit Test
+                                            </button>
+
+                                        ) : (
+                                            <button className="w-3/4 bg-gradient-to-tr from-orange-600 to-orange-300 hover:bg-gradient-to-tr hover:from-orange-300 hover:to-orange-500 text-white p-2 rounded-sm font-bold mt-4 shadow-md shadow-orange-500/40" onClick={routeDashboard}>
+                                                Goto Dashboard
+                                            </button>
+
+                                        )
+                                    }
                                 </div>
                             </>
                         )}
                     </>
-                )
-
-                }
+                )}
                 {!testCompleted && (
                     <>
                         <div className="absolute bottom-0 left-0 w-[100vw] h-[5vh] overflow-hidden flex items-center justify-center">
                             <div className='w-full flex justify-between items-center flex-row'>
                                 <div className='px-5 font-bold text-orange-500 text-xl'>{progressData}</div>
-                                <button className="bg-orange-500 hover:bg-orange-500/60 text-white font-bold px-6 py-4 rounded-md" onClick={moveToNextQuestion}>
-                                    Skip
-                                </button>
+                                {
+                                    btnloader ?
+                                        (
+                                            <button className="bg-orange-200 hover:bg-orange-200/80 text-white font-bold px-6 py-4 rounded-md cursor-progress " disabled>
+                                                <Loader className='animate-spin' />
+                                            </button>
+                                        )
+                                        :
+                                        (
+                                            <button className="bg-orange-500 hover:bg-orange-500/80 text-white font-bold px-6 py-4 rounded-md" onClick={moveToNextQuestion}>
+                                                Skip
+                                            </button>
+                                        )
+                                }
                             </div>
                         </div>
                         <div className='absolute top-0 right-0 p-10 font-bold text-4xl text-orange-500'>{timer}</div>

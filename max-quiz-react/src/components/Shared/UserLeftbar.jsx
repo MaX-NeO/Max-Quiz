@@ -15,7 +15,7 @@ const UserLeftbar = () => {
             icon: CreditCard
         },
         {
-            title: 'Assesments',
+            title: 'MCQ',
             path: '/user/assesments',
             icon: BookCheck
         },

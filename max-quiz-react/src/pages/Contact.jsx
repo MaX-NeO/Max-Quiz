@@ -5,7 +5,6 @@ import { Mail, Map, Phone } from 'lucide-react'
 const Contact = () => {
     return (
         <>
-
             <PageSection Title={"Contact Us !"} Desc={"Feel free to ask Questions "} />
             <div className='h-[70vh] w-screen flex items-center justify-center flex-row'>
                 <div className='w-1/4 flex flex-col h-[60vh] justify-evenly items-center '>

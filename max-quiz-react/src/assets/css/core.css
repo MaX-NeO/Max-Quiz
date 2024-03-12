@@ -6,8 +6,15 @@
     border-bottom: 4px solid rgb(249 115 22 / 1);
     color: rgb(249 115 22 / 1);
 }
-.particle-bg-x{
+
+.particle-bg-x {
     background-color: transparent;
     background-image: radial-gradient(orange 2px, #ffffff10 1px);
     background-size: 50px 40px;
+}
+
+th,
+td {
+    padding: 1rem;
+    text-align: center;
 }

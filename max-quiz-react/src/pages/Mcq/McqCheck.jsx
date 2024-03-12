@@ -25,9 +25,11 @@ const McqCheck = () => {
     };
 
     const handleSubmit = () => {
-        const mcqcode = 1111;
-        const uid = 123
         const combinedOtp = otp.join('');
+        const mcqcode = '1111';
+        //Note :  use parseInt in prod
+        const uid = 123
+
         if (combinedOtp === mcqcode) {
             alert('test started' + combinedOtp)
             navigate(`/mcq/${mid}/u/${uid}/x/${mcqcode}`)
@@ -35,7 +37,6 @@ const McqCheck = () => {
         else {
             console.log("invalid Code !")
         }
-        console.log(combinedOtp);
     };
 
     return (
