@@ -1,18 +1,21 @@
-import React from 'react'
+import React, { lazy } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import WebLayout from './layouts/WebLayout'
-import Login from './pages/Auth/Login'
-import Contact from './pages/Contact'
-import Register from './pages/Auth/Register'
 import UserLayout from './layouts/UserLayout'
-import UserDashboard from './pages/Shared/UserDashboard'
-import UserMembership from './pages/Shared/UserMembership'
-import UserAssesments from './pages/Shared/UserAssesments'
-import UserSettings from './pages/Shared/UserSettings'
 import McqLayout from './layouts/McqLayout'
-import McqCheck from './pages/Mcq/McqCheck'
-import McqPanel from './pages/Mcq/McqPanel'
+
+const Login = lazy(() => import('./pages/Auth/Login'))
+const Contact = lazy(() => import('./pages/Contact'))
+const Register = lazy(() => import('./pages/Auth/Register'))
+const UserDashboard = lazy(() => import('./pages/Shared/UserDashboard'))
+const UserMembership = lazy(() => import('./pages/Shared/UserMembership'))
+const UserAssesments = lazy(() => import('./pages/Shared/UserAssesments'))
+const UserSettings = lazy(() => import('./pages/Shared/UserSettings'))
+const McqCheck = lazy(() => import('./pages/Mcq/McqCheck'))
+const McqPanel = lazy(() => import('./pages/Mcq/McqPanel'))
+
+
 const App = () => {
   return (
     <>
