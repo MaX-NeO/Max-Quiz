@@ -1,40 +1,48 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Loader from './components/public/Loader'
 import Home from './pages/Home'
+import Err404 from './pages/Err404'
 import WebLayout from './layouts/WebLayout'
-import Login from './pages/Auth/Login'
-import Contact from './pages/Contact'
-import Register from './pages/Auth/Register'
 import UserLayout from './layouts/UserLayout'
-import UserDashboard from './pages/Shared/UserDashboard'
-import UserMembership from './pages/Shared/UserMembership'
-import UserAssesments from './pages/Shared/UserAssesments'
-import UserSettings from './pages/Shared/UserSettings'
 import McqLayout from './layouts/McqLayout'
-import McqCheck from './pages/Mcq/McqCheck'
-import McqPanel from './pages/Mcq/McqPanel'
+
+const Login = lazy(() => import('./pages/Auth/Login'))
+const Contact = lazy(() => import('./pages/Contact'))
+const Register = lazy(() => import('./pages/Auth/Register'))
+const UserDashboard = lazy(() => import('./pages/Shared/UserDashboard'))
+const UserMembership = lazy(() => import('./pages/Shared/UserMembership'))
+const UserAssesments = lazy(() => import('./pages/Shared/UserAssesments'))
+const UserSettings = lazy(() => import('./pages/Shared/UserSettings'))
+const McqCheck = lazy(() => import('./pages/Mcq/McqCheck'))
+const McqPanel = lazy(() => import('./pages/Mcq/McqPanel'))
+
+
 const App = () => {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route element={<WebLayout />}>
-            <Route exact path='/' element={<Home />} />
-            <Route path='/contact' element={<Contact />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-          </Route>
-          <Route element={<UserLayout />}>
-            <Route path='/user/dashboard' element={<UserDashboard />} />
-            <Route path='/user/membership' element={<UserMembership />} />
-            <Route path='/user/assesments' element={<UserAssesments />} />
-            <Route path='/user/settings' element={<UserSettings />} />
-          </Route>
-          <Route element={<McqLayout />}>
-            <Route path='/mcq/:mid' element={<McqCheck />} />
-            <Route path='/mcq/:mid/u/:uid/x/:mcqcode' element={<McqPanel />} />
-          </Route>
-        </Routes>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route element={<WebLayout />}>
+              <Route exact path='/' element={<Home />} />
+              <Route path='/contact' element={<Contact />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+            </Route>
+            <Route element={<UserLayout />}>
+              <Route path='/user/dashboard' element={<UserDashboard />} />
+              <Route path='/user/membership' element={<UserMembership />} />
+              <Route path='/user/assesments' element={<UserAssesments />} />
+              <Route path='/user/settings' element={<UserSettings />} />
+            </Route>
+            <Route element={<McqLayout />}>
+              <Route path='/mcq/:mid' element={<McqCheck />} />
+              <Route path='/mcq/:mid/u/:uid/x/:mcqcode' element={<McqPanel />} />
+            </Route>
+            <Route path='*' element={<Err404 />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </>
   )

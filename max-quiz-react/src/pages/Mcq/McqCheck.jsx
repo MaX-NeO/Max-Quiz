@@ -25,17 +25,30 @@ const McqCheck = () => {
     };
 
     const handleSubmit = () => {
-        const mcqcode = 1111;
-        const uid = 123
         const combinedOtp = otp.join('');
+        const mcqcode = '1111';
+        //Note :  use parseInt in prod
+        const uid = 123
+
         if (combinedOtp === mcqcode) {
+            //fulscreen mode start
             alert('test started' + combinedOtp)
+            const element = document.documentElement;
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
             navigate(`/mcq/${mid}/u/${uid}/x/${mcqcode}`)
         }
         else {
             console.log("invalid Code !")
+            alert('invalid code')
         }
-        console.log(combinedOtp);
     };
 
     return (

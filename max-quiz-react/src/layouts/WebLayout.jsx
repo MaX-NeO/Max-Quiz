@@ -16,10 +16,7 @@ const WebLayout = () => {
                 ) : (
                     <Navbar />
                 )
-
             }
-
-
 
             <Outlet />
         </>
