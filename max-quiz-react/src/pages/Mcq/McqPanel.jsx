@@ -13,6 +13,10 @@ const McqPanel = () => {
     const [btnloader, setBtnloader] = useState(false)
     const [issubmitted, setIssubmitted] = useState(false)
     const navigate = useNavigate()
+
+    const startTest = () => {
+        setTestmodel(false)
+    }
     useEffect(() => {
         let intervalId;
         if (!testmodel) {
@@ -72,6 +76,15 @@ const McqPanel = () => {
         setIssubmitted(true)
     };
     const routeDashboard = () => {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
         navigate('/user/dashboard')
     }
     const currentQuestion = questions[currentQuestionIndex];
@@ -87,7 +100,7 @@ const McqPanel = () => {
                                 <div className='h-full w-full border-2 border-orange-500/50 rounded-sm font-bold text-center text-3xl flex items-center justify-center'>
                                     Ready to Start ?
                                 </div>
-                                <button className='w-[40%] bg-gradient-to-tr from-orange-600 to-orange-300 text-white p-2 rounded-sm font-bold mt-4 shadow-md shadow-orange-500/40' onClick={() => { setTestmodel(false) }}>Start Quiz</button>
+                                <button className='w-[40%] bg-gradient-to-tr from-orange-600 to-orange-300 text-white p-2 rounded-sm font-bold mt-4 shadow-md shadow-orange-500/40' onClick={startTest}>Start Quiz</button>
                             </div>
                         </div>
                     </>
