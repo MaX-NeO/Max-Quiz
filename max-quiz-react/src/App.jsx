@@ -1,14 +1,14 @@
 import React, { Suspense, lazy } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Loader from './components/public/Loader'
-import Home from './pages/Home'
 import Err404 from './pages/Err404'
 import WebLayout from './layouts/WebLayout'
-import UserLayout from './layouts/UserLayout'
-import McqLayout from './layouts/McqLayout'
-
-const Login = lazy(() => import('./pages/Auth/Login'))
-const Contact = lazy(() => import('./pages/Contact'))
+import Home from './pages/Home'
+import Login from './pages/Auth/Login'
+import Contact from './pages/Contact'
+const AdminLayout = lazy(() => import('./layouts/AdminLayout'))
+const UserLayout = lazy(() => import('./layouts/UserLayout'))
+const McqLayout = lazy(() => import('./layouts/McqLayout'))
 const Register = lazy(() => import('./pages/Auth/Register'))
 const UserDashboard = lazy(() => import('./pages/Shared/UserDashboard'))
 const UserMembership = lazy(() => import('./pages/Shared/UserMembership'))
@@ -39,6 +39,9 @@ const App = () => {
             <Route element={<McqLayout />}>
               <Route path='/mcq/:mid' element={<McqCheck />} />
               <Route path='/mcq/:mid/u/:uid/x/:mcqcode' element={<McqPanel />} />
+            </Route>
+            <Route element={<AdminLayout />}>
+
             </Route>
             <Route path='*' element={<Err404 />} />
           </Routes>
