@@ -10,7 +10,7 @@ const AdminLayout = () => {
                 <AdminLeftbar />
                 <div className=''>
                     <AdminTopBar />
-                    <div className='w-[85vw]h-[95vh] flex flex-col p-2 gap-4'>
+                    <div className='w-[85vw] h-[95vh] flex flex-col p-2 gap-4'>
                         <Outlet />
                     </div>
                 </div>

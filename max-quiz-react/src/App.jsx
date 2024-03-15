@@ -6,6 +6,9 @@ import WebLayout from './layouts/WebLayout'
 import Home from './pages/Home'
 import Login from './pages/Auth/Login'
 import Contact from './pages/Contact'
+import AdminDashboard from './pages/Admin/AdminDashboard'
+import AdminMemberships from './pages/Admin/AdminMemberships'
+import AdminAssesments from './pages/Admin/AdminAssesments'
 const AdminLayout = lazy(() => import('./layouts/AdminLayout'))
 const UserLayout = lazy(() => import('./layouts/UserLayout'))
 const McqLayout = lazy(() => import('./layouts/McqLayout'))
@@ -41,7 +44,9 @@ const App = () => {
               <Route path='/mcq/:mid/u/:uid/x/:mcqcode' element={<McqPanel />} />
             </Route>
             <Route element={<AdminLayout />}>
-
+              <Route path='/admin/dashboard' element={<AdminDashboard />} />
+              <Route path='/admin/plans' element={<AdminMemberships />} />
+              <Route path='/admin/assesments' element={<AdminAssesments />} />
             </Route>
             <Route path='*' element={<Err404 />} />
           </Routes>

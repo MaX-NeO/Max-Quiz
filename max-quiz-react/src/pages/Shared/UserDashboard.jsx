@@ -17,7 +17,7 @@ const UserDashboard = () => {
                         </div>
                     </div>
                     <div className='h-full w-2/4 flex items-center justify-center border-2 border-orange-500/5'>
-                        <Medal className='text-orange-500' size={50}/>
+                        <Medal className='text-orange-500' size={50} />
                     </div>
                 </div>
                 <div className='flex flex-row h-40 w-1/4 shadow-md shadow-orange-500/40 cursor-pointer hover:shadow-orange-500'>
@@ -30,8 +30,8 @@ const UserDashboard = () => {
                         </div>
                     </div>
                     <div className='h-full w-2/4 flex items-center justify-center border-2 border-orange-500/5'>
-                        <BookCheck className='text-orange-500' size={50}/>
-                       
+                        <BookCheck className='text-orange-500' size={50} />
+
                     </div>
                 </div>
                 <div className='flex flex-row h-40 w-1/4 shadow-md shadow-orange-500/40 cursor-pointer hover:shadow-orange-500'>
@@ -44,7 +44,7 @@ const UserDashboard = () => {
                         </div>
                     </div>
                     <div className='h-full w-2/4 flex items-center justify-center border-2 border-orange-500/5'>
-                        <BookCopy  className='text-orange-500' size={50}/>
+                        <BookCopy className='text-orange-500' size={50} />
                     </div>
                 </div>
             </div>

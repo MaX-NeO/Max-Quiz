@@ -51,7 +51,7 @@ const UserSettings = () => {
         </div>
       </div>
       {
-        editmodel ? (
+        editmodel && (
           <>
             <div className='h-screen w-screen flex absolute z-50 bg-gray-500/60 justify-center items-center top-0 left-0'>
               <div className='h-[45vh] w-[30vw] flex flex-col shadow-md shadow-orange-500/20 bg-white rounded-sm'>
@@ -59,7 +59,7 @@ const UserSettings = () => {
                   <input type="text" name="" id="" placeholder='Name' value='Mohanraj M' className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
                   <input type="email" name="" id="" placeholder='Email' value='max.neo.dev@gmail.com' className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
                   <input type="number" name="" id="" placeholder='Phone' value='9876543210' className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
-                  <textarea value='1/22, Abc street, cde city, Tamilnadu , India - 648 000' className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm'/>
+                  <textarea value='1/22, Abc street, cde city, Tamilnadu , India - 648 000' className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
                 </div>
                 <div className='h-1/6 w-full flex flex-row justify-center items-center'>
                   <button className='w-1/2 h-full bg-red-500 font-bold text-white' onClick={() => { setEditmodel(false) }}> Cancel </button>
@@ -67,9 +67,6 @@ const UserSettings = () => {
                 </div>
               </div>
             </div>
-          </>
-        ) : (
-          <>
           </>
         )
       }
