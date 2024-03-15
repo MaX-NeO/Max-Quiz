@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Loader } from 'lucide-react'
 import { questions } from '../../configs/Config';
 import { useNavigate } from 'react-router-dom';
+import CircleProgressBar from '../../components/Mcq/CircleProgressBar';
 
 const McqPanel = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -127,6 +128,7 @@ const McqPanel = () => {
                             <>
                                 <div className='w-[60vw] h-[40vh] flex flex-col rounded-sm shadow-md shadow-orange-500/20 p-4 justify-center items-center gap-8'>
                                     <div className="text-center mt-8 text-xl font-bold">Test Completed!</div>
+
                                     {score}
                                     {
                                         !issubmitted ? (
@@ -167,7 +169,9 @@ const McqPanel = () => {
                                 }
                             </div>
                         </div>
-                        <div className='absolute top-0 right-0 p-10 font-bold text-4xl text-orange-500'>{timer}</div>
+                        <div className='absolute top-0 right-0 p-10 font-bold text-4xl text-orange-500'>
+                            <CircleProgressBar time={timer} />
+                        </div>
                     </>
                 )}
             </div>
