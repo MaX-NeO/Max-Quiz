@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, CreditCard, BookCheck, Cog, Mail } from 'lucide-react'
+import { LayoutDashboard, CreditCard, BookCheck, Cog, Mail, Users, Globe } from 'lucide-react'
 const AdminLeftbar = () => {
     const navigate = useNavigate()
     const UserLinks = [
@@ -10,19 +10,29 @@ const AdminLeftbar = () => {
             icon: LayoutDashboard
         },
         {
-            title: 'Membership',
+            title: 'Memberships',
             path: '/admin/plans',
             icon: CreditCard
         },
         {
-            title: 'MCQ',
+            title: 'Assesments',
             path: '/admin/assesments',
             icon: BookCheck
+        },
+        {
+            title: 'Users',
+            path: '/admin/users',
+            icon: Users
         },
         {
             title: 'Mails',
             path: '/admin/support',
             icon: Mail
+        },
+        {
+            title: 'Configs',
+            path: '/admin/siteconfigs',
+            icon: Globe
         },
         {
             title: 'Settings',
