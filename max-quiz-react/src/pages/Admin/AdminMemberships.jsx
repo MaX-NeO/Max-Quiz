@@ -43,7 +43,7 @@ const AdminMemberships = () => {
                                     2341
                                 </td>
                                 <td>
-                                    Mohanraj M
+                                    6 Months
                                 </td>
                                 <td>
                                     300
