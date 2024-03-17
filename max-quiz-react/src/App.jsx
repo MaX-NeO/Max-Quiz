@@ -6,14 +6,8 @@ import Err404 from './pages/Err404'
 import Home from './pages/Home'
 import Login from './pages/Auth/Login'
 import Contact from './pages/Contact'
+import AdminAddAssesment from './pages/Admin/AdminAddAssesment'
 
-import AdminDashboard from './pages/Admin/AdminDashboard'
-import AdminMemberships from './pages/Admin/AdminMemberships'
-import AdminAssesments from './pages/Admin/AdminAssesments'
-import AdminUsers from './pages/Admin/AdminUsers'
-import AdminMails from './pages/Admin/AdminMails'
-import AdminSiteconfigs from './pages/Admin/AdminSiteconfigs'
-import AdminSettings from './pages/Admin/AdminSettings'
 
 const AdminLayout = lazy(() => import('./layouts/AdminLayout'))
 const UserLayout = lazy(() => import('./layouts/UserLayout'))
@@ -24,6 +18,14 @@ const UserDashboard = lazy(() => import('./pages/Shared/UserDashboard'))
 const UserMembership = lazy(() => import('./pages/Shared/UserMembership'))
 const UserAssesments = lazy(() => import('./pages/Shared/UserAssesments'))
 const UserSettings = lazy(() => import('./pages/Shared/UserSettings'))
+
+const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard'))
+const AdminMemberships = lazy(() => import('./pages/Admin/AdminMemberships'))
+const AdminAssesments = lazy(() => import('./pages/Admin/AdminAssesments'))
+const AdminUsers = lazy(() => import('./pages/Admin/AdminUsers'))
+const AdminMails = lazy(() => import('./pages/Admin/AdminMails'))
+const AdminSiteconfigs = lazy(() => import('./pages/Admin/AdminSiteconfigs'))
+const AdminSettings = lazy(() => import('./pages/Admin/AdminSettings'))
 
 const McqCheck = lazy(() => import('./pages/Mcq/McqCheck'))
 const McqPanel = lazy(() => import('./pages/Mcq/McqPanel'))
@@ -55,6 +57,7 @@ const App = () => {
               <Route path='/admin/dashboard' element={<AdminDashboard />} />
               <Route path='/admin/plans' element={<AdminMemberships />} />
               <Route path='/admin/assesments' element={<AdminAssesments />} />
+              <Route path='/admin/assesments/add' element={<AdminAddAssesment />} />
               <Route path='/admin/users' element={<AdminUsers />} />
               <Route path='/admin/support' element={<AdminMails />} />
               <Route path='/admin/siteconfigs' element={<AdminSiteconfigs />} />
