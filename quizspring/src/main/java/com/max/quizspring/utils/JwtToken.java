@@ -20,7 +20,7 @@ public class JwtToken {
     private String EKey = "lkndYWIbyLG5oHVhV2E0Qx1xwz6ELnct";
     // 7 Days
     // private int Duration = 604800000;
-    private int Duration = 60 * 60 * 24 * 7;
+    private int Duration = 60 * 60 * 60 * 24 * 7;
 
     public String extractUsername(String token) {
         return extraClaim(token, Claims::getSubject);

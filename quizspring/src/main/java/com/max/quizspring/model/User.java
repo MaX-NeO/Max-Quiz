@@ -41,7 +41,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();
@@ -49,7 +49,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        //NOTE :  return username, if you are using username for login instead of email
+        // NOTE : return username, if you are using username for login instead of email
         return email;
     }
 

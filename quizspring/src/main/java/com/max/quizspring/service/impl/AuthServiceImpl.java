@@ -39,9 +39,14 @@ public class AuthServiceImpl implements AuthService {
         if (userExist.isPresent()) {
             return "User already exists with email id " + registerRequest.getEmail();
         }
-        var user = User.builder().name(registerRequest.getName()).email(registerRequest.getEmail())
+        var user = User.builder()
+                .name(registerRequest.getName())
+                .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .phone(registerRequest.getPhone()).role(Role.User).build();
+                .phone(registerRequest.getPhone())
+                .address(registerRequest.getAddress())
+                .role(Role.User)
+                .build();
         userRepository.save(user);
         return "User registered successfully.";
     }
