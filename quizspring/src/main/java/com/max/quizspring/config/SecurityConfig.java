@@ -35,8 +35,9 @@ public class SecurityConfig {
         private final AuthenticationProvider authenticationProvider;
         private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-        private static final String[] WHITELIST = {
-                        "/api/v1/auth/**"
+        private static final String[] PublicEndPoints = {
+                        "/api/v1/auth/**",
+                        "/api/v1/web/**"
         };
 
         @Bean
@@ -45,7 +46,7 @@ public class SecurityConfig {
                                 .csrf(AbstractHttpConfigurer::disable)
                                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                                 .authorizeHttpRequests(
-                                                authorize -> authorize.requestMatchers(WHITELIST).permitAll()
+                                                authorize -> authorize.requestMatchers(PublicEndPoints).permitAll()
                                                                 .anyRequest().authenticated())
                                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authenticationProvider(authenticationProvider)
@@ -56,7 +57,8 @@ public class SecurityConfig {
         @Bean
         public CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration corsConfiguration = new CorsConfiguration();
-                corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4000", "http://localhost:5173"));
+                // Note : Replace with server url/ip in production
+                corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
                 corsConfiguration.setAllowedHeaders(Arrays.asList(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE));
                 corsConfiguration.setAllowedMethods(
                                 Arrays.asList(GET.name(), POST.name(), PUT.name(), PATCH.name(), DELETE.name(),
