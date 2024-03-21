@@ -18,17 +18,23 @@ import io.jsonwebtoken.security.Keys;
 public class JwtToken {
 
     private String EKey = "lkndYWIbyLG5oHVhV2E0Qx1xwz6ELnct";
-    private int Duration = 1000000;
-    public String extractUsername (String token){
-        return extraClaim(token , Claims::getSubject);
+    // 7 Days
+    // private int Duration = 604800000;
+    private int Duration = 60 * 60 * 24 * 7;
+
+    public String extractUsername(String token) {
+        return extraClaim(token, Claims::getSubject);
     }
+
     private Date extractExpiration(String token) {
         return extraClaim(token, Claims::getExpiration);
     }
+
     private <T> T extraClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
+
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(getSigningkey()).build().parseClaimsJws(token).getBody();
     }

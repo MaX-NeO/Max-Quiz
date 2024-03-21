@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-QuizspringApplication<quizspring>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.max.quizspring.QuizspringApplication",
+            "projectName": "quizspring",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

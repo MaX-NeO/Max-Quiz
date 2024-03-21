@@ -36,8 +36,9 @@ public class SecurityConfig {
         private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
         private static final String[] PublicEndPoints = {
-                        "/api/v1/auth/**",
-                        "/api/v1/web/**"
+                        "/api/auth/**",
+                        "/api/web/**",
+                        "/api/sample/**"
         };
 
         @Bean
