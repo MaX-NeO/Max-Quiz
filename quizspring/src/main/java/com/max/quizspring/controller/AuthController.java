@@ -1,6 +1,7 @@
 package com.max.quizspring.controller;
 
-import org.springframework.http.HttpStatus;
+import static org.springframework.http.HttpStatus.OK;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,21 +12,28 @@ import com.max.quizspring.dto.request.LoginRequest;
 import com.max.quizspring.dto.request.RegisterRequest;
 import com.max.quizspring.service.AuthService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@Tag(name = "Authentication", description = "Endpoints for user authentication")
 public class AuthController {
+
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
-        return new ResponseEntity<>(authService.register(registerRequest), HttpStatus.OK);
+    @Operation(summary = "Register a new user", description = "Allows users to register by providing necessary registration details.")
+    public ResponseEntity<?> register(@Parameter(description = "Registration details of the user") @RequestBody RegisterRequest registerRequest) {
+        return new ResponseEntity<>(authService.register(registerRequest), OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        return new ResponseEntity<>(authService.login(loginRequest), HttpStatus.OK);
+    @Operation(summary = "Authenticate user", description = "Allows users to authenticate by providing valid login credentials.")
+    public ResponseEntity<?> login(@Parameter(description = "Login credentials of the user") @RequestBody LoginRequest loginRequest) {
+        return new ResponseEntity<>(authService.login(loginRequest), OK);
     }
 }
