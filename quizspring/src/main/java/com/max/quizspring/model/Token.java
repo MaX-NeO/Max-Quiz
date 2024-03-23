@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "qz_token")
 public class Token {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column(unique = true)
