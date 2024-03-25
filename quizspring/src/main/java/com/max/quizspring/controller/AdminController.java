@@ -11,20 +11,19 @@ import com.max.quizspring.service.AuthService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/admin/default")
+@RequestMapping("/api/admin")
 @RequiredArgsConstructor
 public class AdminController {
 
-
     private final AuthService authService;
 
-        @PostMapping
-        public ResponseEntity<?> createAdmin() {
-            try {
-                return new ResponseEntity<>(authService.createAdmin(), HttpStatus.CREATED);
-            } catch (Exception e) {
-                return ResponseEntity.notFound().build();
-            }
+    @PostMapping("/default")
+    public ResponseEntity<?> createAdmin() {
+        try {
+            return new ResponseEntity<>(authService.createAdmin(), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
-    
+    }
+
 }
