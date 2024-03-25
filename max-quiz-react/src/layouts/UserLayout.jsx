@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 import UserLeftbar from '../components/Shared/UserLeftbar'
 import UserTopBar from '../components/Shared/UserTopbar'
+import Loader from '../components/public/Loader'
 
 const UserLayout = () => {
     return (
@@ -11,7 +12,9 @@ const UserLayout = () => {
                 <div className=''>
                     <UserTopBar />
                     <div className='w-[85vw]h-[95vh] flex flex-col p-2 gap-4'>
-                        <Outlet />
+                        <Suspense fallback={<Loader />}>
+                            <Outlet />
+                        </Suspense>
                     </div>
                 </div>
             </div>

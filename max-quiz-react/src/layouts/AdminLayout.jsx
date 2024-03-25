@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 import AdminLeftbar from '../components/Admin/AdminLeftbar'
 import AdminTopBar from '../components/Admin/AdminTopbar'
+import Loader2 from '../components/public/Loader2'
 
 const AdminLayout = () => {
     return (
@@ -11,7 +12,9 @@ const AdminLayout = () => {
                 <div className='h-screen'>
                     <AdminTopBar />
                     <div className='w-[85vw] h-[95vh] flex flex-col p-2 gap-4'>
-                        <Outlet />
+                        <Suspense fallback={<Loader2 />}>
+                            <Outlet />
+                        </Suspense>
                     </div>
                 </div>
             </div>

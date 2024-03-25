@@ -21,28 +21,28 @@ public class SwaggerConfig {
 
     @Bean
     public OpenAPI openAPI() {
-            return new OpenAPI()
-                            .info(new Info()
-                                            .title("Max Neo Quiz")
-                                            .description("This is a sample API documentation")
-                                            .version("1.0.0")
-                                            .contact(new Contact()
-                                                            .name("Max Neo")
-                                                            .email("max.neo.dev@gmail.com")
-                                                            .url("https://example.com"))
-                                            .license(new License()
-                                                            .name("Apache 2.0")
-                                                            .url("https://www.apache.org/licenses/LICENSE-2.0.html")))
-                            .servers(List.of(new Server().url("http://localhost:7777")))
-                            .addSecurityItem(new SecurityRequirement()
-                                            .addList("bearerAuth"))
-                            .components(new Components()
-                                            .addSecuritySchemes(
-                                                            "bearerAuth", new SecurityScheme()
-                                                                            .name("bearerAuth")
-                                                                            .type(HTTP)
-                                                                            .scheme("bearer")
-                                                                            .description("Provide the JWT token.\"")
-                                                                            .bearerFormat("JWT")));
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Max Neo Quiz")
+                        .description("This is a sample API documentation")
+                        .version("1.0.0")
+                        .contact(new Contact()
+                                .name("Max Neo")
+                                .email("max.neo.dev@gmail.com")
+                                .url("https://example.com"))
+                        .license(new License()
+                                .name("Apache 2.0")
+                                .url("https://www.apache.org/licenses/LICENSE-2.0.html")))
+                .servers(List.of(new Server().url("http://localhost:7777")))
+                .addSecurityItem(new SecurityRequirement()
+                        .addList("bearerAuth"))
+                .components(new Components()
+                        .addSecuritySchemes(
+                                "bearerAuth", new SecurityScheme()
+                                        .name("bearerAuth")
+                                        .type(HTTP)
+                                        .scheme("bearer")
+                                        .description("Provide the JWT token.\"")
+                                        .bearerFormat("JWT")));
     }
 }
