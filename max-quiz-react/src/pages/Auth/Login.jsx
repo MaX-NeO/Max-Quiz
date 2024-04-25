@@ -2,23 +2,53 @@ import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SignIn } from '../../services/api'
 import toast, { Toaster } from 'react-hot-toast'
-
+import { jwtDecode } from 'jwt-decode'
 const Login = () => {
     const navigate = useNavigate()
+    // const sessionToken = {
+    //     accessToken: "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQWRtaW4iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTQwMzAwMDksImV4cCI6MTcxNDA2NjI5N30.HzAznnTb8YwDMV0CyFKtSu-OkdMJWtAyRv0HibBOsOw"
+    // }
+    // if (sessionToken) {
+    //     const sessionTokenDecode = jwtDecode(sessionToken.accessToken);
+
+    //     if (sessionTokenDecode.role === "User") {
+    //         setTimeout(() => {
+    //             navigate('/user/dashboard')
+    //         }, 2000)
+    //     }
+    //     else if (sessionTokenDecode.role === "Admin") {
+    //         navigate('/admin/dashboard')
+    //     }
+    //     else {
+    //         console.log("Error");
+    //     }
+    // }
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-
             const res = await SignIn(emailRef.current.value, passwordRef.current.value)
             if (res.status === 200) {
                 console.log(res);
+                const rawToken = res.data.accessToken;
+                const tokenDecode = jwtDecode(rawToken)
+                console.log(tokenDecode)
                 toast.success("Welcome")
-                //TODO: create token role check
-                setTimeout(() => {
-                    navigate('/user/dashboard')
-                }, 4000)
+                if (tokenDecode.role) {
+                    // console.log("L1")
+                    if (tokenDecode.role === "User") {
+                        setTimeout(() => {
+                            navigate('/user/dashboard')
+                        }, 2000)
+                    }
+                    else if (tokenDecode.role === "Admin") {
+                        navigate('/admin/dashboard')
+                    }
+                    else {
+                        console.log("Error");
+                    }
+                }
             }
             else if (res.status === 403) {
                 console.log("invalid email/password");

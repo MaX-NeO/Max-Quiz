@@ -90,7 +90,7 @@ public class AuthServiceImpl implements AuthService {
         var user = User.builder()
                 .name("Admin")
                 .email("admin@gmail.com")
-                .password(passwordEncoder.encode("Admin@123"))
+                .password(passwordEncoder.encode("1811321"))
                 .phone("1234567890")
                 .address("xyz")
                 .role(Role.Admin)
