@@ -1,18 +1,33 @@
 import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { SignIn } from '../../services/api'
+import toast, { Toaster } from 'react-hot-toast'
 
 const Login = () => {
     const navigate = useNavigate()
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
-        const loginData = {
-            email: emailRef.current.value,
-            password: passwordRef.current.value
+        try {
+
+            const res = await SignIn(emailRef.current.value, passwordRef.current.value)
+            if (res.status === 200) {
+                console.log(res);
+                toast.success("Welcome")
+                //TODO: create token role check
+                setTimeout(() => {
+                    navigate('/user/dashboard')
+                }, 4000)
+            }
+            else if (res.status === 403) {
+                console.log("invalid email/password");
+                toast.error("invalid email/password")
+            }
         }
-        console.log(loginData)
-        navigate('/user/dashboard')
+        catch (e) {
+            console.log(e);
+        }
     }
     return (
         <>
@@ -24,6 +39,7 @@ const Login = () => {
                     <p>Don't have an account ? <span className='text-orange-500 cursor-pointer font-bold' onClick={() => navigate('/register')}> Register ! </span></p>
                 </form>
             </div>
+            <Toaster />
         </>
     )
 }

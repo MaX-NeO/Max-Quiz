@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SignUp } from '../../services/api'
-
+import { toast, Toaster } from 'react-hot-toast'
 const Register = () => {
 
     const navigate = useNavigate()
@@ -18,8 +18,19 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(registerdata);
-        const res = await SignUp(registerdata.name,registerdata.email,registerdata.phone,registerdata.address,registerdata.password);
-        console.log(res.status);
+        const res = await SignUp(registerdata.name, registerdata.email, registerdata.phone, registerdata.address, registerdata.password);
+
+        if (res.data==="User registered successfully.") {
+
+            toast.success("Signup Success")
+            setTimeout(() => {
+                navigate('/login')
+            }, 5000)
+        }
+        else {
+            toast.error(res.data)
+            // console.log(res.data)
+        }
 
     }
     return (
@@ -35,6 +46,7 @@ const Register = () => {
                     <p>Already have an account ? <span className='text-orange-500 cursor-pointer font-bold' onClick={() => navigate('/login')}> Login ! </span></p>
                 </form>
             </div>
+            <Toaster />
         </>
     )
 }

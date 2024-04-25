@@ -10,7 +10,6 @@ const WebLayout = () => {
     return (
         <>
             <Navbar />
-
             <Suspense fallback={<Loader />}>
                 <Outlet />
             </Suspense>
