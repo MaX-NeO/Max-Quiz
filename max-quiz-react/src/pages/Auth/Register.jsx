@@ -6,11 +6,11 @@ const Register = () => {
 
     const navigate = useNavigate()
     const [registerdata, setRegisterdata] = useState({
-        "name": '',
-        "phone": '',
-        "address": '',
-        "email": '',
-        "password": ''
+        name: '',
+        phone: '',
+        address: '',
+        email: '',
+        password: ''
     })
     const handleChange = (e) => {
         setRegisterdata({ ...registerdata, [e.target.id]: e.target.value })
@@ -18,8 +18,8 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(registerdata);
-        const res = await SignUp(registerdata);
-        // console.log(res.status);
+        const res = await SignUp(registerdata.name,registerdata.email,registerdata.phone,registerdata.address,registerdata.password);
+        console.log(res.status);
 
     }
     return (

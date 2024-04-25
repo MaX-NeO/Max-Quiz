@@ -6,8 +6,8 @@ import axios from 'axios'
 
 const URI = 'http://localhost:7777/api'
 
-const SignIn = (logindata) => axios.post(URI + '/auth/login', { logindata })
-const SignUp = (registerdata) => axios.post(URI + '/auth/register', { registerdata })
+const SignIn = (email, password) => axios.post(URI + '/auth/login', { email,password })
+const SignUp = (name, email, phone, address, password) => axios.post(URI + '/auth/register', { name, email, phone, address, password })
 
 // const logindata ={
 //     email:'',
