@@ -12,16 +12,14 @@ const Login = () => {
         const res = await authService.SignIn(emailRef.current.value, passwordRef.current.value)
         if (res.status === 200) {
             authService.setToken(res.data.accessToken)
-            // console.log(res.data.accessToken)
-            // toast.success("Welcome")
-            // const tokendata = authService.getUserRole()
-            // localStorage.setItem('token',res.data.accessToken)
-            // console.log(tokendata)
-            if (authService.getUserRole !== null) {
-                if (authService.getUserRole === "Admin") {
+
+            toast.success("Welcome")
+            console.log(authService.getUserRole())
+            if (authService.getUserRole() !== null) {
+                if (authService.getUserRole() === "Admin") {
                     navigate('/admin/dashboard')
                 }
-                else if (authService.getUserRole === "User") {
+                else if (authService.getUserRole() === "User") {
                     navigate('/user/dashboard')
                 }
                 else {

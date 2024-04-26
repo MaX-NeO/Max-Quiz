@@ -45,7 +45,7 @@ const isLoggedIn = () => {
     }
 }
 
-const SignIn = (email, password) => axiosInstance.post("auth/login", { email, password });
+const SignIn = (email, password) => axiosInstance.post("/auth/login", { email, password });
 const SignOut = () => localStorage.clear()
 
 
