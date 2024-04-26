@@ -1,9 +1,28 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
 import { authService } from '../../services/auth'
 const Login = () => {
     const navigate = useNavigate()
+
+    const checkRedirect = async () => {
+        if (authService.getToken() !== null && authService.isLoggedIn()) {
+            const userRole = authService.getUserRole();
+            if (userRole !== null) {
+                if (userRole === "Admin") {
+                    navigate('/admin/dashboard');
+                } else if (userRole === "User") {
+                    navigate('/user/dashboard');
+                } else {
+                    toast.error("Something went wrong");
+                }
+            }
+        }
+    };
+
+    useEffect(() => {
+        checkRedirect();
+    }, []);
 
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
@@ -12,20 +31,10 @@ const Login = () => {
         const res = await authService.SignIn(emailRef.current.value, passwordRef.current.value)
         if (res.status === 200) {
             authService.setToken(res.data.accessToken)
-
             toast.success("Welcome")
-            console.log(authService.getUserRole())
-            if (authService.getUserRole() !== null) {
-                if (authService.getUserRole() === "Admin") {
-                    navigate('/admin/dashboard')
-                }
-                else if (authService.getUserRole() === "User") {
-                    navigate('/user/dashboard')
-                }
-                else {
-                    toast.error("Something went wrong")
-                }
-            }
+            setTimeout(() => {
+                checkRedirect();
+            }, 3000)
 
         }
     };

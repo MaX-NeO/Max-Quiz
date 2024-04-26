@@ -1,14 +1,20 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import UserLeftbar from '../components/Shared/UserLeftbar'
 import UserTopBar from '../components/Shared/UserTopbar'
 import Loader from '../components/public/Loader'
+import { authService } from '../services/auth'
 
 const UserLayout = () => {
     const Navigate = useNavigate()
-    // if (token.role !== "user"){
-    //     Navigate('/login')
-    // }
+    useEffect(() => {
+        const checkAuth = async () => {
+            if (!authService.isLoggedIn() || authService.getUserRole() !== "User") {
+                Navigate('/login');
+            }
+        };
+        checkAuth();
+    }, [Navigate]);
     return (
         <>
             <div className='m-0 p-0 flex flex-row h-[100vh] w-[100vw] overflow-hidden'>
