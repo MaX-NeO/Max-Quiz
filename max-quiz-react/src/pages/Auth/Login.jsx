@@ -1,64 +1,36 @@
 import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SignIn } from '../../services/api'
 import toast, { Toaster } from 'react-hot-toast'
-import { jwtDecode } from 'jwt-decode'
+import { authService } from '../../services/auth'
 const Login = () => {
     const navigate = useNavigate()
-    // const sessionToken = {
-    //     accessToken: "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQWRtaW4iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTQwMzAwMDksImV4cCI6MTcxNDA2NjI5N30.HzAznnTb8YwDMV0CyFKtSu-OkdMJWtAyRv0HibBOsOw"
-    // }
-    // if (sessionToken) {
-    //     const sessionTokenDecode = jwtDecode(sessionToken.accessToken);
 
-    //     if (sessionTokenDecode.role === "User") {
-    //         setTimeout(() => {
-    //             navigate('/user/dashboard')
-    //         }, 2000)
-    //     }
-    //     else if (sessionTokenDecode.role === "Admin") {
-    //         navigate('/admin/dashboard')
-    //     }
-    //     else {
-    //         console.log("Error");
-    //     }
-    // }
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
     const handleLogin = async (e) => {
-        e.preventDefault()
-        try {
-            const res = await SignIn(emailRef.current.value, passwordRef.current.value)
-            if (res.status === 200) {
-                console.log(res);
-                const rawToken = res.data.accessToken;
-                const tokenDecode = jwtDecode(rawToken)
-                console.log(tokenDecode)
-                toast.success("Welcome")
-                if (tokenDecode.role) {
-                    // console.log("L1")
-                    if (tokenDecode.role === "User") {
-                        setTimeout(() => {
-                            navigate('/user/dashboard')
-                        }, 2000)
-                    }
-                    else if (tokenDecode.role === "Admin") {
-                        navigate('/admin/dashboard')
-                    }
-                    else {
-                        console.log("Error");
-                    }
+        e.preventDefault();
+        const res = await authService.SignIn(emailRef.current.value, passwordRef.current.value)
+        if (res.status === 200) {
+            authService.setToken(res.data.accessToken)
+            // console.log(res.data.accessToken)
+            // toast.success("Welcome")
+            // const tokendata = authService.getUserRole()
+            // localStorage.setItem('token',res.data.accessToken)
+            // console.log(tokendata)
+            if (authService.getUserRole !== null) {
+                if (authService.getUserRole === "Admin") {
+                    navigate('/admin/dashboard')
+                }
+                else if (authService.getUserRole === "User") {
+                    navigate('/user/dashboard')
+                }
+                else {
+                    toast.error("Something went wrong")
                 }
             }
-            else if (res.status === 403) {
-                console.log("invalid email/password");
-                toast.error("invalid email/password")
-            }
+
         }
-        catch (e) {
-            console.log(e);
-        }
-    }
+    };
     return (
         <>
             <div className='p-0 m-0 h-[90vh] w-screen flex justify-center items-center flex-col'>

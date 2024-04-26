@@ -1,10 +1,14 @@
 import React, { Suspense } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import UserLeftbar from '../components/Shared/UserLeftbar'
 import UserTopBar from '../components/Shared/UserTopbar'
 import Loader from '../components/public/Loader'
 
 const UserLayout = () => {
+    const Navigate = useNavigate()
+    // if (token.role !== "user"){
+    //     Navigate('/login')
+    // }
     return (
         <>
             <div className='m-0 p-0 flex flex-row h-[100vh] w-[100vw] overflow-hidden'>
