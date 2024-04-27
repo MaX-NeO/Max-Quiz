@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, CreditCard, BookCheck, Cog, Mail, Users, Globe } from 'lucide-react'
+import { authService } from '../../services/auth'
 const AdminLeftbar = () => {
     const navigate = useNavigate()
     const UserLinks = [
@@ -41,6 +42,7 @@ const AdminLeftbar = () => {
         },
     ]
     const handleLogout = () => {
+        authService.SignOut()
         navigate('/login')
     }
     return (

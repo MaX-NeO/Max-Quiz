@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import static org.springframework.http.HttpStatus.OK;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,8 +27,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class WebController {
 
     private final WebService webService;
-    
-    @GetMapping("/sites")
+
+    @GetMapping("/site")
     @Operation(summary = "Retrieve social media data", description = "Retrieves dynamic user data from social media sites for display on the website's contact page or footer.")
     public ResponseEntity<?> getSiteData() {
         return new ResponseEntity<>(webService.getSiteData(), OK);
@@ -35,13 +36,26 @@ public class WebController {
 
     @PostMapping("/add/site")
     @Operation(summary = "Add new social media site", description = "Adds data for a new social media site.")
-    public ResponseEntity<?> addSiteData(@RequestBody SiteRequest siteRequest){
+    public ResponseEntity<?> addSiteData(@RequestBody SiteRequest siteRequest) {
         return new ResponseEntity<>(webService.addSiteData(siteRequest), OK);
     }
 
-    @PatchMapping("/update/site")
+    // @PatchMapping("/update/site")
+    // @Operation(summary = "Update social media site", description = "Updates data
+    // for an existing social media site.")
+    // public ResponseEntity<?> updateSiteData(@RequestBody SiteRequest siteRequest,
+    // @PathVariable Long id){
+    // return new ResponseEntity<>(webService.updateSiteData(siteRequest, id), OK);
+    // }
+    @PatchMapping("/update/site/{id}")
     @Operation(summary = "Update social media site", description = "Updates data for an existing social media site.")
-    public ResponseEntity<?> updateSiteData(@RequestBody SiteRequest siteRequest, @PathVariable Long id){
+    public ResponseEntity<?> updateSiteData(@RequestBody SiteRequest siteRequest, @PathVariable Long id) {
         return new ResponseEntity<>(webService.updateSiteData(siteRequest, id), OK);
+    }
+
+    @DeleteMapping("/delete/site/{id}")
+    @Operation(summary = "Delete social media site", description = "Delete data for an existing social media site.")
+    public ResponseEntity<?> deleteSiteData(@PathVariable Long id) {
+        return new ResponseEntity<>(webService.deleteSiteData(id), OK);
     }
 }

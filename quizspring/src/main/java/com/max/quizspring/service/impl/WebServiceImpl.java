@@ -18,22 +18,22 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 @SuppressWarnings("null")
-public class WebServiceImpl implements WebService{
+public class WebServiceImpl implements WebService {
 
     private final WebsiteRepo websiteRepo;
 
     @Override
     public List<SiteResponse> getSiteData() {
         return websiteRepo.findAll().stream().map(site -> SiteResponse.builder()
-                    .wid(site.getWid())
-                    .siteEmail(site.getSiteEmail())
-                    .siteContact(site.getSiteContact())
-                    .siteAddress(site.getSiteAddress())
-                    .siteFacebook(site.getSiteFacebook())
-                    .siteX(site.getSiteX())
-                    .siteYoutube(site.getSiteYoutube())
-                    .siteMaintenanceMode(site.isSiteMaintenanceMode())
-                    .build()).collect(Collectors.toList());
+                .wid(site.getWid())
+                .siteEmail(site.getSiteEmail())
+                .siteContact(site.getSiteContact())
+                .siteAddress(site.getSiteAddress())
+                .siteFacebook(site.getSiteFacebook())
+                .siteX(site.getSiteX())
+                .siteYoutube(site.getSiteYoutube())
+                .siteMaintenanceMode(site.isSiteMaintenanceMode())
+                .build()).collect(Collectors.toList());
     }
 
     @Override
@@ -43,15 +43,23 @@ public class WebServiceImpl implements WebService{
         }
 
         var siteData = Website.builder()
-                        .siteEmail(siteRequest.getSiteEmail())
-                        .siteContact(siteRequest.getSiteContact())
-                        .siteAddress(siteRequest.getSiteAddress())
-                        .siteFacebook(siteRequest.getSiteFacebook())
-                        .siteX(siteRequest.getSiteX())
-                        .siteYoutube(siteRequest.getSiteYoutube())
-                        .siteMaintenanceMode(false).build();
+                .siteEmail(siteRequest.getSiteEmail())
+                .siteContact(siteRequest.getSiteContact())
+                .siteAddress(siteRequest.getSiteAddress())
+                .siteFacebook(siteRequest.getSiteFacebook())
+                .siteX(siteRequest.getSiteX())
+                .siteYoutube(siteRequest.getSiteYoutube())
+                .siteMaintenanceMode(false).build();
         websiteRepo.save(siteData);
         return "Site record added successfully.";
+    }
+
+    @Override
+    public String deleteSiteData(Long wid) {
+        Website existingSite = websiteRepo.findById(wid)
+                .orElseThrow(null);
+        websiteRepo.deleteById(wid);
+        return "Site config deleted !";
     }
 
     @Override

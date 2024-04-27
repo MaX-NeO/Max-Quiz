@@ -13,4 +13,6 @@ public interface WebService {
 
     SiteResponse updateSiteData(SiteRequest siteRequest, Long id);
 
+    String deleteSiteData(Long id);
+
 }

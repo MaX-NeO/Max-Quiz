@@ -16,11 +16,6 @@ const getUserEmail = () => {
     const token = getToken();
     if (token) {
         const payLoad = jwtDecode(token);
-        // payload :{
-        //     exp:'',
-        //     email:'',
-        //     role:''
-        // }
         return payLoad?.email;
     }
     return null;

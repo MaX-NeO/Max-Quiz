@@ -10,5 +10,4 @@ import lombok.Data;
 public class LoginResponse {
     @Builder.Default
     private String accessToken = "";
-    private String authmessage = "Login";
 }

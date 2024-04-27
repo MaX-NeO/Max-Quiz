@@ -65,5 +65,18 @@ const testuserconfig = {
   contact: 9876543210
 }
 
+// {
+//   "siteEmail": "max.neo.dev@gmail.com",
+//   "siteContact": "9789681510",
+//   "siteAddress": "1205/A, 3rd Floor,
+// SPA SRR Towers, Avinashi Rd,
+// Pappanaickenpalayam,
+// Tamil Nadu 641037",
+//   "siteX": "https://twitter.com/iamneo_ai",
+//   "siteYoutube": "https://www.youtube.com/@iamneo_ai3526/",
+//   "siteFacebook": "https://www.facebook.com/iamneoai",
+//   "siteMaintenanceMode": false
+// }
+
 
 export { ContactConfig, MembershipPlans, questions, razorpayconfig, testuserconfig }
