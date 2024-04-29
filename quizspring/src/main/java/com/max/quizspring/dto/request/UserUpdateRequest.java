@@ -1,6 +1,6 @@
 package com.max.quizspring.dto.request;
 
-import com.max.quizspring.enums.Role;
+// import com.max.quizspring.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +11,8 @@ import lombok.Data;
 public class UserUpdateRequest {
     private String name;
     private String email;
-    private String password;
+    // private String password;
     private String phone;
     private String address;
-    private Role role;
+    // private Role role;
 }

@@ -2,8 +2,11 @@ package com.max.quizspring.service.impl;
 
 import java.util.List;
 import java.util.function.Consumer;
+
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +22,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @SuppressWarnings("null")
 public class WebServiceImpl implements WebService {
-
     private final WebsiteRepo websiteRepo;
+
+    Logger log =LoggerFactory.getLogger(WebServiceImpl.class);
 
     @Override
     public List<SiteResponse> getSiteData() {
+
         return websiteRepo.findAll().stream().map(site -> SiteResponse.builder()
+        
                 .wid(site.getWid())
                 .siteEmail(site.getSiteEmail())
                 .siteContact(site.getSiteContact())
@@ -42,7 +48,7 @@ public class WebServiceImpl implements WebService {
             return "More than one record is present";
         }
 
-        var siteData = Website.builder()
+        Website siteData = Website.builder()
                 .siteEmail(siteRequest.getSiteEmail())
                 .siteContact(siteRequest.getSiteContact())
                 .siteAddress(siteRequest.getSiteAddress())
@@ -50,14 +56,16 @@ public class WebServiceImpl implements WebService {
                 .siteX(siteRequest.getSiteX())
                 .siteYoutube(siteRequest.getSiteYoutube())
                 .siteMaintenanceMode(false).build();
+
+                log.info(siteData.toString());
+                System.out.println(siteData.toString());
         websiteRepo.save(siteData);
+
         return "Site record added successfully.";
     }
 
     @Override
     public String deleteSiteData(Long wid) {
-        Website existingSite = websiteRepo.findById(wid)
-                .orElseThrow(null);
         websiteRepo.deleteById(wid);
         return "Site config deleted !";
     }
@@ -66,18 +74,16 @@ public class WebServiceImpl implements WebService {
     public SiteResponse updateSiteData(SiteRequest siteRequest, Long id) {
         Website existingSite = websiteRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Site with id " + id + " not found"));
-
+    
         updateField(siteRequest.getSiteEmail(), existingSite::setSiteEmail);
         updateField(siteRequest.getSiteContact(), existingSite::setSiteContact);
         updateField(siteRequest.getSiteAddress(), existingSite::setSiteAddress);
         updateField(siteRequest.getSiteX(), existingSite::setSiteX);
         updateField(siteRequest.getSiteYoutube(), existingSite::setSiteYoutube);
         updateField(siteRequest.getSiteFacebook(), existingSite::setSiteFacebook);
-
-        if (siteRequest.isSiteMaintenanceMode()) {
-            existingSite.setSiteMaintenanceMode(true);
-        }
-
+  
+        existingSite.setSiteMaintenanceMode(siteRequest.isSiteMaintenanceMode());
+    
         Website updatedSite = websiteRepo.save(existingSite);
         return mapToResponse(updatedSite);
     }

@@ -1,8 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PageSection from '../components/public/PageSection'
-import { ContactConfig } from '../configs/Config'
 import { Mail, Map, Phone } from 'lucide-react'
+import { WebData } from '../services/api'
 const Contact = () => {
+    const [contacts, setContacts] = useState({
+        siteEmail: "max.neo.dev@gmail.com",
+        siteContact: "9789681510",
+        siteAddress: "Neo",
+    })
+    const checkContacts = async () => {
+        try {
+            const res = await WebData();
+            const siteDataRes = res.data;
+            if (Array.isArray(siteDataRes) && siteDataRes.length > 0) {
+                return setContacts({
+                    siteEmail: siteDataRes[0].siteEmail,
+                    siteContact: siteDataRes[0].siteContact,
+                    siteAddress: siteDataRes[0].siteAddress
+                })
+            }
+        } catch (error) {
+            console.error("Error fetching site data:", error);
+        }
+    };
+    useEffect(() => {
+        checkContacts();
+    }, []);
     return (
         <>
             <PageSection Title={"Contact Us !"} Desc={"Feel free to ask Questions "} />
@@ -13,7 +36,7 @@ const Contact = () => {
                             <Mail size={32} />
                         </p>
                         <h3 className='font-semibold '>
-                            {ContactConfig.email}
+                            {contacts.siteEmail}
                         </h3>
                     </div>
                     <div className='h-1/4 w-3/4 bg-orange-100/10 hover:bg-orange-500/10 flex flex-col justify-center items-center p-2 rounded-md shadow-md gap-2'>
@@ -21,7 +44,7 @@ const Contact = () => {
                             <Phone size={32} />
                         </p>
                         <h3 className='font-semibold '>
-                            {ContactConfig.phone}
+                            {contacts.siteContact}
                         </h3>
                     </div>
                     <div className='h-1/4 w-3/4 bg-orange-100/10 hover:bg-orange-500/10 flex flex-col justify-center items-center p-2 rounded-md shadow-md gap-2'>
@@ -29,7 +52,7 @@ const Contact = () => {
                             <Map size={32} />
                         </p>
                         <h3 className='font-semibold '>
-                            {ContactConfig.address}
+                            {contacts.siteAddress}
                         </h3>
                     </div>
                 </div>

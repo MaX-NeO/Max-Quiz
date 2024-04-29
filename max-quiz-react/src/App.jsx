@@ -6,7 +6,7 @@ import Err404 from './pages/Err404'
 import Home from './pages/Home'
 import Login from './pages/Auth/Login'
 // import Contact from './pages/Contact'
-const Contact = lazy(()=> import('./pages/Contact'))
+const Contact = lazy(() => import('./pages/Contact'))
 const AdminLayout = lazy(() => import('./layouts/AdminLayout'))
 const UserLayout = lazy(() => import('./layouts/UserLayout'))
 const McqLayout = lazy(() => import('./layouts/McqLayout'))

@@ -4,15 +4,16 @@ import AdminLeftbar from '../components/Admin/AdminLeftbar'
 import AdminTopBar from '../components/Admin/AdminTopbar'
 import Loader2 from '../components/public/Loader2'
 import { authService } from '../services/auth'
+import { WebData } from '../services/api'
 
-const AdminLayout = () => {
+const AdminLayout = async () => {
     const Navigate = useNavigate()
+    const checkAuth = async () => {
+        if (!authService.isLoggedIn() || authService.getUserRole() !== "Admin") {
+            Navigate('/login');
+        }
+    };
     useEffect(() => {
-        const checkAuth = async () => {
-            if (!authService.isLoggedIn() || authService.getUserRole() !== "Admin") {
-                Navigate('/login');
-            }
-        };
         checkAuth();
     }, [Navigate]);
     return (

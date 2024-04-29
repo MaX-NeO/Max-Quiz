@@ -32,6 +32,9 @@ const Login = () => {
         if (res.status === 200) {
             authService.setToken(res.data.accessToken)
             toast.success("Welcome")
+            console.log(res.data.accessToken)
+            console.log(authService.getToken())
+
             setTimeout(() => {
                 checkRedirect();
             }, 3000)
