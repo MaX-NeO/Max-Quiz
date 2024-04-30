@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import Footer from '../components/public/Footer'
 import Loader from '../components/public/Loader'
 import { WebData } from '../services/api'
+import MaintainanceMode from '../pages/MaintainanceMode'
 
 const WebLayout = () => {
     const [Maintainance, siteMaintenance] = useState(false)
@@ -29,9 +30,9 @@ const WebLayout = () => {
             {
                 Maintainance ? (
                     <>
-                        <h1>
-                            Site is in Maintainance Mode !
-                        </h1>
+                        <div className='h-screen w-screen flex justify-center items-center'>
+                            <MaintainanceMode />
+                        </div>
                     </>
                 ) : (
                     <>

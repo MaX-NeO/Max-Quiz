@@ -1,20 +1,45 @@
 import { Pencil, Plus, Trash } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Admin } from '../../services/admin'
+import toast, { Toaster } from 'react-hot-toast'
 
 const AdminUsers = () => {
     const navigate = useNavigate()
     const [addmodel, setAddmodel] = useState(false)
     const [deletemodel, setDeletemodel] = useState(false)
+    const [deleteUserId, setDeleteUserId] = useState(null)
+    const [users, setUsers] = useState(null)
     const editUser = (uid) => {
         navigate(`/admin/plans/user/${uid}`)
     }
-    const deleteUser = () => {
+    const deleteUser = (uid) => {
+        console.log(uid)
+        setDeleteUserId(uid)
         setDeletemodel(true)
     }
     const addUser = () => {
         setAddmodel(true)
     }
+    const confirmDeleteUser = async () => {
+        try {
+            Admin.deleteUser(deleteUserId)
+            setUsers(users.filter(user => user.uid !== deleteUserId))
+            setDeletemodel(false)
+            toast.success('User Deleted !')
+        } catch (error) {
+            console.error("Error deleting user:", error)
+            toast.error(error);
+        }
+    }
+    const fetchUserData = async () => {
+        const res = await Admin.getAllUsersData()
+        setUsers(res.filter(user => user.role !== 'Admin'));
+    }
+    useEffect(() => {
+        fetchUserData()
+    }, [])
+    console.log(users)
     return (
         <>
             <div className='h-[90vh] flex justify-center items-center shadow-sm shadow-slate-100 w-[84vw]'>
@@ -46,30 +71,34 @@ const AdminUsers = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    2341
-                                </td>
-                                <td>
-                                    Mohanraj M
-                                </td>
-                                <td>
-                                    9876543210
-                                </td>
-                                <td>
-                                    max.neo.dev@gmail.com
-                                </td>
-                                <td>
-                                    #1
-                                </td>
-                                <td>
-                                    2312
-                                </td>
-                                <td className='flex justify-center items-center gap-4'>
-                                    <button onClick={editUser}> <Pencil className='text-blue-500 p-1 rounded-md border-2 border-blue-500 hover:bg-blue-500 hover:text-white' size={30} /> </button>
-                                    <button onClick={deleteUser}> <Trash className='text-red-500 p-1 rounded-md border-2 border-red-500 hover:bg-red-500 hover:text-white' size={30} /> </button>
-                                </td>
-                            </tr>
+                            {
+                                users && users.map((user) => (
+                                    <tr key={user.uid}>
+                                        <td>
+                                            {user.uid}
+                                        </td>
+                                        <td>
+                                            {user.name}
+                                        </td>
+                                        <td>
+                                            {user.phone}
+                                        </td>
+                                        <td>
+                                            {user.email}
+                                        </td>
+                                        <td>
+                                            #1
+                                        </td>
+                                        <td>
+                                            2312
+                                        </td>
+                                        <td className='flex justify-center items-center gap-4'>
+                                            <button onClick={() => editUser(user.uid)}> <Pencil className='text-blue-500 p-1 rounded-md border-2 border-blue-500 hover:bg-blue-500 hover:text-white' size={30} /> </button>
+                                            <button onClick={() => deleteUser(user.uid)}> <Trash className='text-red-500 p-1 rounded-md border-2 border-red-500 hover:bg-red-500 hover:text-white' size={30} /> </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -86,7 +115,7 @@ const AdminUsers = () => {
                                 </div>
                                 <div className='h-1/6 w-full flex flex-row justify-center items-center'>
                                     <button className='w-1/2 h-full bg-red-500 font-bold text-white' onClick={() => { setDeletemodel(false) }}> Cancel </button>
-                                    <button className='w-1/2 h-full bg-blue-500 font-bold text-white'>Delete</button>
+                                    <button className='w-1/2 h-full bg-blue-500 font-bold text-white' onClick={confirmDeleteUser}>Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -113,6 +142,7 @@ const AdminUsers = () => {
                     </>
                 )
             }
+            <Toaster />
         </>
     )
 }

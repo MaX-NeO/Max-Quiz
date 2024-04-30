@@ -22,4 +22,9 @@ const SignUp = (name, email, phone, address, password) => axiosInstance.post('/a
 const WebData = () => axiosInstance.get('/web/site');
 const UserData = (email) => axiosInstance.get(`/users/email/${email}`);
 const UpdateUserByID = (id, data) => axiosInstance.put(`/users/update/${id}`, data)
-export { axiosInstance, SignUp, WebData, UserData, UpdateUserByID }
+const DeleteUserByID = (id) => axiosInstance.delete(`/users/delete/${id}`)
+
+//Admin
+const getAllUsers = () => axiosInstance.get('/users/all')
+
+export { axiosInstance, SignUp, WebData, UserData, UpdateUserByID, getAllUsers, DeleteUserByID }

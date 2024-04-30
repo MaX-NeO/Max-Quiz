@@ -1,4 +1,4 @@
-import { UpdateUserByID, UserData } from "./api";
+import { UserData } from "./api";
 import { authService } from "./auth"
 
 
@@ -11,7 +11,6 @@ const getUserData = async () => {
 }
 const getUsername = async () => {
     const res = await getUserData()
-    // console.log(res?.name)
     return res?.name;
 }
 const getUserID = async () => {
