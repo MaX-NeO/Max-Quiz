@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Admin } from '../../services/admin'
 import toast, { Toaster } from 'react-hot-toast'
+import { useRef } from 'react'
 
 const AdminUsers = () => {
     const navigate = useNavigate()
@@ -10,6 +11,15 @@ const AdminUsers = () => {
     const [deletemodel, setDeletemodel] = useState(false)
     const [deleteUserId, setDeleteUserId] = useState(null)
     const [users, setUsers] = useState(null)
+    const [role, setRole] = useState('User')
+
+    const nameRef = useRef(null)
+    const emailRef = useRef(null)
+    const phoneRef = useRef(null)
+    const passwordRef = useRef(null)
+    // const roleRef = useRef(null)
+    const addressRef = useRef(null)
+
     const editUser = (uid) => {
         navigate(`/admin/plans/user/${uid}`)
     }
@@ -18,12 +28,22 @@ const AdminUsers = () => {
         setDeleteUserId(uid)
         setDeletemodel(true)
     }
-    const addUser = () => {
-        setAddmodel(true)
+    const addUser = async () => {
+        try {
+            await Admin.addUser(nameRef.current.value, emailRef.current.value, role, phoneRef.current.value, addressRef.current.value, passwordRef.current.value)
+            toast.success('User Added !')
+            setAddmodel(false)
+            fetchUserData()
+        } catch (error) {
+            console.error("Error adding user:", error)
+            toast.error(error);
+        }
+        // console.log(nameRef.current.value)
+
     }
     const confirmDeleteUser = async () => {
         try {
-            Admin.deleteUser(deleteUserId)
+            await Admin.deleteUser(deleteUserId)
             setUsers(users.filter(user => user.uid !== deleteUserId))
             setDeletemodel(false)
             toast.success('User Deleted !')
@@ -39,7 +59,6 @@ const AdminUsers = () => {
     useEffect(() => {
         fetchUserData()
     }, [])
-    console.log(users)
     return (
         <>
             <div className='h-[90vh] flex justify-center items-center shadow-sm shadow-slate-100 w-[84vw]'>
@@ -103,7 +122,7 @@ const AdminUsers = () => {
                     </table>
                 </div>
             </div>
-            <button className='text-green-500 p-1 rounded-md border-2 border-green-500 hover:bg-green-500 hover:text-white absolute right-4 bottom-4 flex flex-row justify-center items-center gap-1 font-semibold h-10 w-10' onClick={addUser}><Plus size={30} /></button>
+            <button className='text-green-500 p-1 rounded-md border-2 border-green-500 hover:bg-green-500 hover:text-white absolute right-4 bottom-4 flex flex-row justify-center items-center gap-1 font-semibold h-10 w-10' onClick={() => { setAddmodel(true) }}><Plus size={30} /></button>
             {
                 deletemodel && (
                     <>
@@ -128,14 +147,19 @@ const AdminUsers = () => {
                         <div className='h-screen w-screen flex absolute z-50 bg-gray-500/60 justify-center items-center top-0 left-0'>
                             <div className='h-[45vh] w-[30vw] flex flex-col shadow-md shadow-orange-500/20 bg-white rounded-sm'>
                                 <div className='h-5/6 w-full flex flex-col justify-center items-center p-2 gap-4'>
-                                    <input type='text' placeholder='Name' className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
-                                    <input type='email' placeholder='Email' className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
-                                    <input type='number' placeholder='Phone' className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
-                                    <input type='password' placeholder='Password' className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
+                                    <input type='text' placeholder='Name' ref={nameRef} className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
+                                    <input type='email' placeholder='Email' ref={emailRef} className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
+                                    <input type='number' placeholder='Phone' ref={phoneRef} className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
+                                    <input type='password' placeholder='Password' ref={passwordRef} className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
+                                    <select value={role} onChange={(e) => setRole(e.target.value)} className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm'>
+                                        <option value='User'>User</option>
+                                        <option value='Admin'>Admin</option>
+                                    </select>
+                                    <input type='text' placeholder='Address' ref={addressRef} className='bg-orange-100/30 outline-none border-2 border-transparent focus:border-b-2 focus:border-b-orange-300 rounded-sm w-[80%] text-black placeholder:text-black p-2 shadow-sm' />
                                 </div>
                                 <div className='h-1/6 w-full flex flex-row justify-center items-center'>
                                     <button className='w-1/2 h-full bg-red-500 font-bold text-white' onClick={() => { setAddmodel(false) }}> Cancel </button>
-                                    <button className='w-1/2 h-full bg-blue-500 font-bold text-white'>Add User</button>
+                                    <button className='w-1/2 h-full bg-blue-500 font-bold text-white' onClick={addUser}>Add User</button>
                                 </div>
                             </div>
                         </div>

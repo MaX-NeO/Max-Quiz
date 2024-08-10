@@ -29,12 +29,10 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         const res = await authService.SignIn(emailRef.current.value, passwordRef.current.value)
+        console.log(res.data);
         if (res.status === 200) {
             authService.setToken(res.data.accessToken)
             toast.success("Welcome")
-            console.log(res.data.accessToken)
-            console.log(authService.getToken())
-
             setTimeout(() => {
                 checkRedirect();
             }, 3000)

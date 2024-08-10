@@ -5,7 +5,6 @@ import { authService } from "./auth"
 const email = authService.getUserEmail();
 const getUserData = async () => {
     const res = await UserData(email)
-    console.log('ww')
     return res?.data;
 
 }

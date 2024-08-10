@@ -11,7 +11,6 @@ const AdminSettings = () => {
 
   const [editmodel, setEditmodel] = useState(false)
   const [editkeymodel, setEditkeymodel] = useState(false)
-
   const [userdata, setUserdata] = useState({
     id: 0,
     name: '',

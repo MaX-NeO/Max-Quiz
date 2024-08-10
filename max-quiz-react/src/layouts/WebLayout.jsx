@@ -3,15 +3,16 @@ import Navbar from '../components/public/Navbar'
 import { Outlet } from 'react-router-dom'
 import Footer from '../components/public/Footer'
 import Loader from '../components/public/Loader'
-import { WebData } from '../services/api'
+import { WebDatax } from '../services/api'
 import MaintainanceMode from '../pages/MaintainanceMode'
 
 const WebLayout = () => {
     const [Maintainance, siteMaintenance] = useState(false)
     const checkMaintainance = async () => {
         try {
-            const res = await WebData();
+            const res = await WebDatax();
             const siteDataRes = res.data;
+            console.log(res)
             if (siteDataRes !== null) {
                 if (siteDataRes[0].siteMaintenanceMode) {
                     return siteMaintenance(siteDataRes[0].siteMaintenanceMode)

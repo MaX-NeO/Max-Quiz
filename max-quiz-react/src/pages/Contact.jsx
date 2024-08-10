@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PageSection from '../components/public/PageSection'
 import { Mail, Map, Phone } from 'lucide-react'
-import { WebData } from '../services/api'
+import { WebDatax } from '../services/api'
 const Contact = () => {
     const [contacts, setContacts] = useState({
         siteEmail: "max.neo.dev@gmail.com",
@@ -10,7 +10,7 @@ const Contact = () => {
     })
     const checkContacts = async () => {
         try {
-            const res = await WebData();
+            const res = await WebDatax();
             const siteDataRes = res.data;
             if (Array.isArray(siteDataRes) && siteDataRes.length > 0) {
                 return setContacts({

@@ -1,4 +1,4 @@
-import { DeleteUserByID, getAllUsers } from "./api"
+import { CreateUser, DeleteUserByID, getAllUsers } from "./api"
 
 
 
@@ -8,9 +8,13 @@ const getAllUsersData = async () => {
 
 }
 const deleteUser = async (uid) => {
-    console.log(uid)
+    // console.log(uid)
     const res = await DeleteUserByID(uid);
     return res?.data;
 }
+const addUser = async (name, email,role, phone, address, password) => {
+    const res = await CreateUser(name, email, role, phone, address, password);
+    return res?.data;
+}
 
-export const Admin = { getAllUsersData, deleteUser }
+export const Admin = { getAllUsersData, deleteUser,addUser }

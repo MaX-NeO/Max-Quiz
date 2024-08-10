@@ -18,13 +18,14 @@ axiosInstance.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-const SignUp = (name, email, phone, address, password) => axiosInstance.post('/auth/register', { name, email, phone, address, password });
-const WebData = () => axiosInstance.get('/web/site');
+const SignUp = (name, email, phone, address, password) => axios.post(`${baseURL}/auth/register`, { name, email, phone, address, password });
+const WebDatax = () => axios.get(`${baseURL}/web/sitex`);
 const UserData = (email) => axiosInstance.get(`/users/email/${email}`);
 const UpdateUserByID = (id, data) => axiosInstance.put(`/users/update/${id}`, data)
 const DeleteUserByID = (id) => axiosInstance.delete(`/users/delete/${id}`)
 
 //Admin
 const getAllUsers = () => axiosInstance.get('/users/all')
+const CreateUser = (name, email, role, phone, address, password) => axiosInstance.post('/user/add', { name, email, phone, role, address, password });
 
-export { axiosInstance, SignUp, WebData, UserData, UpdateUserByID, getAllUsers, DeleteUserByID }
+export { axiosInstance, SignUp, WebDatax, UserData, UpdateUserByID, getAllUsers, DeleteUserByID, CreateUser }
