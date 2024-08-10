@@ -30,7 +30,7 @@ public class WebController {
     private final WebService webService;
      Logger log =LoggerFactory.getLogger(WebController.class);
 
-    @GetMapping("/site")
+    @GetMapping("/sitex")
     @Operation(summary = "Retrieve social media data", description = "Retrieves dynamic user data from social media sites for display on the website's contact page or footer.")
     public ResponseEntity<?> getSiteData() {
         return new ResponseEntity<>(webService.getSiteData(), OK);
